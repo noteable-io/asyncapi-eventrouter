@@ -329,7 +329,7 @@ tests = ["mock"]
 name = "pyyaml"
 version = "6.0"
 description = "YAML parser and emitter for Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -395,7 +395,7 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "7400d9d587f52a100d1bf5414e6a7e288d443be4015dc6deaf954c91c3b6a0a1"
+content-hash = "2b5baa989f48d8482bb3fe8270ef2f2e448fcfef3baffbc80946d929cf1bb4f0"
 
 [metadata.files]
 atomicwrites = [
