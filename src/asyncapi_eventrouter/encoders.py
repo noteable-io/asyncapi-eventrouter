@@ -1,4 +1,8 @@
-# taken straight from https://github.com/tiangolo/fastapi/blob/master/fastapi/encoders.py
+"""FastAPI Encoders
+
+Attribution for this source code file: https://github.com/tiangolo/fastapi/blob/master/fastapi/encoders.py
+"""
+
 
 import dataclasses
 from collections import defaultdict

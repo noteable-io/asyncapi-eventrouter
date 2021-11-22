@@ -1,3 +1,4 @@
+"""Event router for asynchronous messages"""
 from typing import Any, Coroutine, Dict, List, Optional, Union
 
 from pydantic import BaseModel
@@ -6,6 +7,7 @@ from asyncapi_eventrouter.asyncapi.utils import get_asyncapi
 
 
 class ChannelAction:
+    """Represents the actions that occur over a communication channel"""
     def __init__(
         self,
         channel: str,
@@ -22,6 +24,7 @@ class ChannelAction:
 
 
 class AsyncRouter:
+    """"A router of asynchronous API event requests"""
     def __init__(
         self,
         *,
@@ -52,7 +55,7 @@ class AsyncRouter:
         # TODO: add default_content_type (as default_response_class ?)
 
     def asyncapi(self):
-        "Return the AsyncAPI schema for this router as a dictionary"
+        """Return the router's AsyncAPI schema as a dictionary"""
         # Only gets built one time, then saved statically
         if not self.asyncapi_schema:
             self.asyncapi_schema = get_asyncapi(
