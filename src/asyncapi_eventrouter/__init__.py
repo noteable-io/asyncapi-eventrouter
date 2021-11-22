@@ -1,6 +1,4 @@
-"""
-My description
-"""
+"""Project version"""
 
 from .router import AsyncRouter  # type: ignore
 
