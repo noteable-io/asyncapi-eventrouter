@@ -1,5 +1,8 @@
 # asyncapi-eventrouter
-Python framework for AsyncAPI-documented Websocket, PubSub, and other async constructs
+
+*Work in Progress*
+
+Write Python code for Event-Driven Architectures!  `asyncapi-eventrouter` is a prototype library for creating Websocket, PubSub, and other asynchronous frameworks with message validation and automatic schema documentation in the [AsyncAPI](https://www.asyncapi.com/) specification.  It's heavily inspired by how [FastAPI](https://fastapi.tiangolo.com/) documents REST endpoints in the [OpenAPI](https://swagger.io/specification/) specification.
 
 
 
