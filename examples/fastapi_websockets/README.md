@@ -1,18 +1,15 @@
 
 # Install
 
-1. Enter into the Poetry virtual environment
-    - `poetry use 3.9`
-    - `poetry install`
-    - `poetry shell`
+Make sure Poetry's virtual environment is setup and the `asyncapi-eventrouter` is installed alongside dependencies.
 
-2. Install the requirements for this sample app
-    - `pip install -r requirements.txt`
+1. `poetry use 3.9`
+2. `poetry install`
+3. `poetry shell`
 
 # Run
 
-From the Poetry virtual environment shell:
-    - `uvicorn main:app --reload`
+From the Poetry virtual environment shell: `uvicorn main:app --reload`
 
 # View schema
 

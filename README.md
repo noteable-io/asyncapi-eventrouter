@@ -13,21 +13,44 @@ specification.
 What would the [Streetlights API](https://www.asyncapi.com/docs/tutorials/streetlights#creating-the-asyncapi-file) look like in Python code with `asyncapi-eventrouter`?
 
 ```python
+# asyncapi.py
 from pydantic import BaseModel, Field
 from datetime import datetime
-from asyncapi_eventrouter import AsyncRouter
+from asyncapi_eventrouter import Application
 
-router = AsyncRouter()
+asyncapi_app = Application()
 
 class LightMeasured(BaseModel):
     id: int = Field(..., gte=0, description="ID of the streetlight.")
     lumens: int = Field(..., gte=0, description="Light intensity measured in lumens.")
     sentAt: datetime = Field(..., description="Date and time when the message was sent.")
 
-@router.subscribe(channels="light/measured", name="LightMeasured")
+@asyncapi_app.subscribe(channel_name="light/measured",
+                        event_name="LightMeasured")
 async def record_measurement(measurement: LightMeasured):
-    # record to db or take some action
-    return
+    # record to db or take some other action
+    return {'received': datetime.now()}
+```
+
+```python
+# main.py
+from fastapi import FastAPI, WebSocket
+from .asyncapi import asyncapi_app
+
+app = FastAPI()
+
+@app.websocket('/ws')
+async def ws(websocket: Websocket):
+    await ws.accept()
+    while True:
+        while True:
+        content = await websocket.receive_text()
+        response = asyncapi_app.process(content)
+        await websocket.send_json(response)
+
+@app.get('/ws-schema')
+async def ws_schema():
+    return asyncapi_app.schema()
 ```
 
 
