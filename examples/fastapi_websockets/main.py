@@ -89,3 +89,9 @@ class PrettyJSONResponse(Response):
 @app.get("/ws-schema", response_class=PrettyJSONResponse)
 def ws_schema():
     return asyncapi_app.schema()
+
+
+if __name__ == "__main__":
+    import uvicorn  # type: ignore
+
+    uvicorn.run(app, debug=True)
