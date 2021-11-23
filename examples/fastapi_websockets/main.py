@@ -1,5 +1,10 @@
-from fastapi import FastAPI, WebSocket
+import json
+
+from fastapi import FastAPI, Response, WebSocket
 from fastapi.responses import HTMLResponse
+from pydantic import BaseModel
+
+import asyncapi_eventrouter  # type: ignore
 
 app = FastAPI()
 
@@ -28,10 +33,14 @@ html = """
             };
             function sendMessage(event) {
                 var input = document.getElementById("messageText")
-                ws.send(input.value)
+                var wsEvent = {"channel": "demo",
+                               "event": "msg",
+                               "data": {"text": input.value},
+                               }
+                ws.send(JSON.stringify(wsEvent))
                 input.value = ''
                 event.preventDefault()
-            }
+            };
         </script>
     </body>
 </html>
@@ -43,10 +52,40 @@ async def get():
     return HTMLResponse(html)
 
 
+asyncapi_app = asyncapi_eventrouter.Application()
+
+
+class Text(BaseModel):
+    text: str
+
+
+@asyncapi_app.subscribe(channel_name="demo", event_name="msg")
+def echo(data: Text):
+    return repr(data)
+
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
-        data = await websocket.receive_text()
-        print(f"recieved: {data}")
-        await websocket.send_text(f"Reply: {data[::-1]}")
+        content = await websocket.receive_text()
+        response = asyncapi_app.process(content)
+        await websocket.send_text(response)
+
+
+class PrettyJSONResponse(Response):
+    media_type = "application/json"
+
+    def render(self, content):
+        return json.dumps(
+            content,
+            ensure_ascii=False,
+            allow_nan=False,
+            indent=4,
+            separators=(", ", ": "),
+        ).encode("utf-8")
+
+
+@app.get("/ws-schema", response_class=PrettyJSONResponse)
+def ws_schema():
+    return asyncapi_app.schema()
