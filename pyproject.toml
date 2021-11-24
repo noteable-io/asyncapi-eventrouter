@@ -24,6 +24,7 @@ fastapi = "^0.70.0"
 websockets = "^10.1"
 uvicorn = "^0.15.0"
 typer = "^0.4.0"
+aioredis = "^2.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
