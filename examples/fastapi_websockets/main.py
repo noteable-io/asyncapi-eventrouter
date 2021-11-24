@@ -4,7 +4,7 @@ from fastapi import FastAPI, Response, WebSocket
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-import asyncapi_eventrouter  # type: ignore
+import asyncapi_eventrouter
 
 app = FastAPI()
 
@@ -92,6 +92,6 @@ def ws_schema():
 
 
 if __name__ == "__main__":
-    import uvicorn  # type: ignore
+    import uvicorn
 
     uvicorn.run(app, debug=True)
