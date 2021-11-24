@@ -77,36 +77,36 @@ from asyncapi import asyncapi_app
 import yaml
 
 print(yaml.dump(asyncapi_app.schema())
->>> asyncapi: 2.2.0
-    channels:
-    light/measured:
-        publish:
-        LightMeasured:
-            payload:
-            properties:
-                id:
-                description: ID of the streetlight.
-                gte: 0
-                title: Id
-                type: integer
-                lumens:
-                description: Light intensity measured in lumens.
-                gte: 0
-                title: Lumens
-                type: integer
-                sentAt:
-                description: Date and time when the message was sent.
-                format: date-time
-                title: Sentat
-                type: string
-            required:
-            - id
-            - lumens
-            - sentAt
-            title: LightMeasured
-            type: object
-```
 
+asyncapi: 2.2.0
+channels:
+  light/measured:
+    publish:
+      LightMeasured:
+        payload:
+          properties:
+            id:
+              description: ID of the streetlight.
+              gte: 0
+              title: Id
+              type: integer
+            lumens:
+              description: Light intensity measured in lumens.
+              gte: 0
+              title: Lumens
+              type: integer
+            sentAt:
+              description: Date and time when the message was sent.
+              format: date-time
+              title: Sentat
+              type: string
+          required:
+          - id
+          - lumens
+          - sentAt
+          title: LightMeasured
+          type: object
+```
 
 ## Development
 
