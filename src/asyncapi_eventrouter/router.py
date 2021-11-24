@@ -2,7 +2,7 @@
 import collections
 import inspect
 import warnings
-from typing import Any, Callable
+from typing import Any, Callable, Coroutine
 
 from pydantic import BaseModel
 
@@ -14,7 +14,7 @@ class Event(BaseModel):
 
 
 class Subscription:
-    def __init__(self, func: Callable):
+    def __init__(self, func: Callable[..., Coroutine]):
         self.func = func
         self.signature = inspect.signature(func)
         func_params = list(self.signature.parameters.values())
@@ -22,9 +22,9 @@ class Subscription:
             raise Exception()
         self.model = func_params[0].annotation
 
-    def process(self, data: dict):
+    async def process(self, data: dict):
         validated = self.model(**data)
-        return self.func(validated)
+        return await self.func(validated)
 
     def schema(self):
         return {"payload": self.model.schema()}
@@ -43,7 +43,7 @@ class Channel:
         self.publishers = {}
         self.subscribers = {}
 
-    def register_subscription(self, event_name: str, func: Callable):
+    def register_subscription(self, event_name: str, func: Callable[..., Coroutine]):
         if event_name in self.subscribers:
             warnings.warn(f"overwriting existing subscription for {event_name}")
         sub = Subscription(func=func)
@@ -62,9 +62,9 @@ class Channel:
 
         return decorator
 
-    def process(self, event_name: str, data: dict):
+    async def process(self, event_name: str, data: dict):
         if event_name in self.subscribers:
-            return self.subscribers[event_name].process(data)
+            return await self.subscribers[event_name].process(data)
 
     def schema(self):
         out = collections.defaultdict(dict)
@@ -79,7 +79,9 @@ class ChannelRouter:
     def __init__(self):
         self.channels = {}
 
-    def register_subscription(self, channel_name: str, event_name: str, func: Callable):
+    def register_subscription(
+        self, channel_name: str, event_name: str, func: Callable[..., Coroutine]
+    ):
         if channel_name not in self.channels:
             self.channels[channel_name] = Channel()
         return self.channels[channel_name].register_subscription(event_name, func)
@@ -91,9 +93,9 @@ class ChannelRouter:
 
         return decorator
 
-    def process(self, channel_name: str, event_name: str, data: dict):
+    async def process(self, channel_name: str, event_name: str, data: dict):
         if channel_name in self.channels:
-            return self.channels[channel_name].process(event_name, data)
+            return await self.channels[channel_name].process(event_name, data)
 
     def schema(self):
         out = {}
@@ -106,7 +108,7 @@ class Application:
     def __init__(self):
         self.router = ChannelRouter()
 
-    def register_subscription(self, channel: str, name: str, func: Callable):
+    def register_subscription(self, channel: str, name: str, func: Callable[..., Coroutine]):
         return self.router.register_subscription(channel, name, func)
 
     def subscribe(self, channel_name: str, event_name: str):
@@ -116,9 +118,9 @@ class Application:
 
         return decorator
 
-    def process(self, message: str):
+    async def process(self, message: str):
         event = Event.parse_raw(message)
-        return self.router.process(
+        return await self.router.process(
             channel_name=event.channel, event_name=event.event, data=event.data
         )
 
