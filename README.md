@@ -43,9 +43,8 @@ app = FastAPI()
 async def ws(websocket: Websocket):
     await ws.accept()
     while True:
-        while True:
         content = await websocket.receive_text()
-        response = asyncapi_app.process(content)
+        response = await asyncapi_app.process(content)
         await websocket.send_json(response)
 
 @app.get('/ws-schema')
@@ -53,6 +52,25 @@ async def ws_schema():
     return asyncapi_app.schema()
 ```
 
+```python
+# client.py
+import asyncio
+import json
+from datetime import datetime
+
+import websockets
+
+async def send_measurement():
+    data = {"id": 123, "lumens": 42, "sentAt": datetime.now().isoformat()}
+    event = {"channel": "light/measured", "event": "LightMeasured", "data": data}
+    async with websockets.connect("ws://localhost:8000/ws") as ws:
+        await ws.send(json.dumps(event))
+
+if __name__ == '__main__':
+    asyncio.run(send_measurement())
+```
+
+See more in the `examples/` directory.
 
 ## Development
 
