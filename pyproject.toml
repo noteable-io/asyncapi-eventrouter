@@ -45,3 +45,6 @@ source = ["asyncapi_eventrouter"]
 [tool.coverage.report]
 show_missing = true
 fail_under = 100
+
+[tool.mypy]
+ignore_missing_imports = true
