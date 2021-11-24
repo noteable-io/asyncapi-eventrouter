@@ -1,5 +1,8 @@
+# FastAPI Websockets Example
 
-# Install
+This example follows the well-written [FastAPI Websockets](https://fastapi.tiangolo.com/advanced/websockets/) documentation, showing how to add in `asyncapi-eventrouter` to a minimal websocket application.
+
+## Install
 
 Make sure Poetry's virtual environment is setup and the `asyncapi-eventrouter` is installed alongside dependencies.
 
@@ -7,11 +10,11 @@ Make sure Poetry's virtual environment is setup and the `asyncapi-eventrouter` i
 2. `poetry install`
 3. `poetry shell`
 
-# Run
+## Run
 
 From the Poetry virtual environment shell: `uvicorn main:app --reload`
 
-# View schema
+## View schema
 
 The basic Websocket request/reply behavior should look nearly identical to the vanilla FastAPI websocket example.  However you can view the JSON AsyncAPI schema for the websocket-app at `http://localhost:8000/ws-schema`.  It should render as --
 
