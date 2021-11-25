@@ -4,17 +4,17 @@ This example implements the minimal [Streetlights](https://www.asyncapi.com/docs
 
 ## Install
 
-Make sure Poetry's virtual environment is setup and the `asyncapi-eventrouter` is installed alongside dependencies.  You'll also need Redis for this example, see [Redis Quick Start docs](https://redis.io/topics/quickstart) for installation instructions.
+Make sure Poetry's virtual environment is setup and the `asyncapi-eventrouter` is installed alongside the optional "examples" dependencies.  You'll also need Redis server for this example, see [Redis Quick Start docs](https://redis.io/topics/quickstart) for installation instructions.
 
 1. `poetry use 3.9`
-2. `poetry install`
+2. `poetry install -E examples`
 3. `poetry shell`
 4. `redis-server`
 
 
 ## Run
 
-1. Start the server: `python main.py`
+1. Start the subscriber application: `python main.py`
 2. Send measurement data to the server with `python cli.py send`.  See `python cli.py --help` for more options.
 
 

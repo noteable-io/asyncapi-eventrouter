@@ -4,10 +4,10 @@ This example follows the well-written [FastAPI Websockets](https://fastapi.tiang
 
 ## Install
 
-Make sure Poetry's virtual environment is setup and the `asyncapi-eventrouter` is installed alongside dependencies.
+Make sure Poetry's virtual environment is setup and the `asyncapi-eventrouter` is installed alongside the optional "examples" dependencies.
 
 1. `poetry use 3.9`
-2. `poetry install`
+2. `poetry install -E examples`
 3. `poetry shell`
 
 ## Run
