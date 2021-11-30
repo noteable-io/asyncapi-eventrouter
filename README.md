@@ -122,9 +122,9 @@ If the `pre-commit` hooks can not be easily resolved, you can still commit using
 
 ### Testing
 
-This project uses [tox](https://github.com/tox-dev/tox) and [pytest](https://docs.pytest.org) for testing.  To run tests, just execute `tox` (or `tox -q` for less verbosity).  You'll need to have [installed tox](https://tox.wiki/en/latest/install.html) on your system Python.
+This project uses [tox](https://github.com/tox-dev/tox) and [pytest](https://docs.pytest.org) for testing.  You'll need to have [installed tox](https://tox.wiki/en/latest/install.html) on your system Python.  To run tests, just execute `tox` (`tox -q` for less verbosity, `tox -p` to run in parallel).
 
-You'll also need a system installation for each Python version you want to test with `tox` (e.g. `python3.7`, `python3.8`, `python3.9`, `python3.10`).  Installation steps may be different for each OS.  On Ubuntu 20.04, it is a matter of running `sudo apt install python3.10`.
+You'll also need a system installation for each Python version you want to test with `tox` (e.g. `python3.7`, `python3.8`, `python3.9`, `python3.10`).  Installation steps may be different for each OS.  On Ubuntu 20.04, it is a matter of adding the [deadsnakes](https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa) repository (`sudo add-apt-repository ppa:deadsnakes/ppa`) and installing the version you want: `sudo apt install python3.10`.
 
 
 ## Inspiration and gratitude
